@@ -5,13 +5,22 @@ using TMPro;
 public class MenuUIHandler : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
+    public TextMeshProUGUI bestScoreText;
 
     void Start()
     {
-        string lastName = DataManager.Instance.GetPlayerName();
-        if (!string.IsNullOrEmpty(lastName))
+        if (DataManager.Instance != null)
         {
-            playerNameInput.text = lastName;
+            string lastName = DataManager.Instance.GetPlayerName();
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                playerNameInput.text = lastName;
+            }
+        }
+
+        if (bestScoreText != null)
+        {
+            bestScoreText.text = MainManager.UpdateHighScore();
         }
     }
 
@@ -19,5 +28,10 @@ public class MenuUIHandler : MonoBehaviour
     {
         DataManager.Instance.SetPlayerName(playerNameInput.text);
         SceneManager.LoadScene(1);
+    }
+
+    public void ShowHighScores()
+    {
+        SceneManager.LoadScene(2);
     }
 }

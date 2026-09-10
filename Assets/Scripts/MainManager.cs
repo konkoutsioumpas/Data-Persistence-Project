@@ -59,7 +59,7 @@ public class MainManager : MonoBehaviour
             }
         }
 
-        UpdateHighScore();
+        BestScoreText.text = UpdateHighScore();
     }
 
     private void Update()
@@ -92,12 +92,11 @@ public class MainManager : MonoBehaviour
         ScoreText.text = $"Score : {m_Points}";
     }
 
-    void UpdateHighScore()
+    public static string UpdateHighScore()
     {
         if (DataManager.Instance == null)
         {
-            BestScoreText.text = "Best Score : No one has set a score yet";
-            return;
+            return "Best Score : No one has set a score yet";
         }
 
         string highScoreName = DataManager.Instance.GetHighScorePlayerName();
@@ -105,12 +104,10 @@ public class MainManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(highScoreName))
         {
-            BestScoreText.text = $"Best Score : {highScoreName} : {highScore}";
+            return $"Best Score : {highScoreName} : {highScore}";
         }
-        else
-        {
-            BestScoreText.text = "Best Score : No one has set a score yet";
-        }
+
+        return "Best Score : No one has set a score yet";
     }
 
     public void GameOver()
@@ -123,6 +120,6 @@ public class MainManager : MonoBehaviour
             DataManager.Instance.TryUpdateHighScore(m_Points);
         }
 
-        UpdateHighScore();
+        BestScoreText.text = UpdateHighScore();
     }
 }
